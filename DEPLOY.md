@@ -45,7 +45,41 @@ server {
     add_header Cross-Origin-Opener-Policy same-origin always;
     add_header Cross-Origin-Embedder-Policy credentialless always;
 
-    # 2. Xử lý Single Page Application (SPA fallback)
+    # 2. Ngăn lỗi 405 Method Not Allowed khi client POST đến static/SPA
+    error_page 405 =200 $uri;
+
+    # 3. Các API endpoints xử lý Cloud Mode cho client
+    location = /api/ice-servers {
+        default_type application/json;
+        add_header Access-Control-Allow-Origin *;
+        add_header Cross-Origin-Opener-Policy same-origin always;
+        add_header Cross-Origin-Embedder-Policy credentialless always;
+        return 200 '{"iceServers":[]}';
+    }
+
+    location ~ ^/api/(storage-config|disk-states|pick-directory)$ {
+        default_type application/json;
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+        add_header Access-Control-Allow-Headers "*";
+        add_header Cross-Origin-Opener-Policy same-origin always;
+        add_header Cross-Origin-Embedder-Policy credentialless always;
+        if ($request_method = OPTIONS) { return 204; }
+        return 200 '{"ok":true,"cloudMode":true,"roms":[],"states":[],"storage":null,"settings":null,"controls":null}';
+    }
+
+    location = /api/community-board {
+        default_type application/json;
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS";
+        add_header Access-Control-Allow-Headers "*";
+        add_header Cross-Origin-Opener-Policy same-origin always;
+        add_header Cross-Origin-Embedder-Policy credentialless always;
+        if ($request_method = OPTIONS) { return 204; }
+        return 200 '{"rooms":[]}';
+    }
+
+    # 4. Xử lý Single Page Application (SPA fallback)
     location / {
         try_files $uri $uri/ /index.html;
     }
