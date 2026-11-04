@@ -1,0 +1,20 @@
+{
+  "name": "COIN-OPX — Máy Thùng Arcade Online",
+  "short_name": "COIN-OPX",
+  "description": "Chơi game thùng Arcade cổ điển ngay trên trình duyệt, cùng bạn bè online P2P.",
+  "id": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#0b0d10",
+  "theme_color": "#0c1018",
+  "lang": "vi",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
