@@ -1,3 +1,5 @@
+import mimetypes
+mimetypes.add_type("application/wasm", ".wasm")
 import http.server
 import socketserver
 import os
